@@ -11,6 +11,3 @@ path = "src/part1.rs"
 [[bin]]
 name = "part2"
 path = "src/part2.rs"
-
-[dependencies]
-reqwest = "^0.9.5"
