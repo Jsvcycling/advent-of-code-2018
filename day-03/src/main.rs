@@ -28,7 +28,7 @@ fn parse_line(line: String) -> Entry {
     )
 }
 
-fn part1(data: &Vec<Entry>) {
+fn part1(data: &Vec<Entry>) -> Option<usize> {
     let mut fabric: HashMap<(u32, u32), u32> = HashMap::new();
 
     for entry in data {
@@ -51,18 +51,64 @@ fn part1(data: &Vec<Entry>) {
 
     // Count the number of squares that is claimed by at least 2 entries.
     let count = fabric.values().filter(|x| **x > 1).count();
-    
-    println!("{}", count);
+
+    Some(count)
 }
 
-fn part2(data: &Vec<Entry>) {
-    // TODO
+// FIXME: This solution is very ugly and seems inefficient. Come back and fix this one day...
+fn part2(data: &Vec<Entry>) -> Option<usize> {
+    let mut fabric: HashMap<(u32, u32), Vec<u32>> = HashMap::new();
+
+    for entry in data {
+        let id = entry.0;
+        let start_x = (entry.1).0;
+        let start_y = (entry.1).1;
+        let size_x = (entry.2).0;
+        let size_y = (entry.2).1;
+
+        for i in start_x..start_x+size_x {
+            for j in start_y..start_y+size_y {
+                if let Some(x) = fabric.get_mut(&(i, j)) {
+                    x.push(id)
+                } else {
+                    fabric.insert((i, j), vec![id]);
+                }
+            }
+        }
+    }
+    
+    for entry in data {
+        let id = entry.0;
+        let start_x = (entry.1).0;
+        let start_y = (entry.1).1;
+        let size_x = (entry.2).0;
+        let size_y = (entry.2).1;
+
+        let mut good = true;
+
+        'outer: for i in start_x..start_x+size_x {
+            for j in start_y..start_y+size_y {
+                if let Some(x) = fabric.get(&(i, j)) {
+                    if x.len() > 1 {
+                        good = false;
+                        break 'outer;
+                    }
+                }
+            }
+        }
+
+        if good {
+            return Some(id as usize);
+        }
+    }
+
+    None
 }
 
 fn main() {
     let data: Vec<Entry> = read_file().into_iter().map(|x| parse_line(x)).collect();
 
-    part1(&data);
-    part2(&data);
+    println!("Part 1 Solution: {:?}", part1(&data).unwrap());
+    println!("Part 2 Solution: {:?}", part2(&data).unwrap());
 }
 
