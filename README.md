@@ -1,5 +1,7 @@
 # Advent of Code 2018
 
+**SPOILER WARNING: This repository contains the solutions!**
+
 This repository contains my solutions to the Advent of Code 2018 challenge.
 
 All solutions are written in Rust nightly. Although Rust might not be the most
