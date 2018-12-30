@@ -36,7 +36,7 @@ fn main() -> Result<()> {
         strings.push(chars.collect());
     }
 
-    // Iterate over every string and compare it to every other string (careful, this is O(n) time).
+    // Iterate over every string and compare it to every other string (in O(n^2) time).
     'outer: for i in 0..strings.len()-1 {
         for j in i+1..strings.len()-1 {
             if let (Some(a), Some(b)) = (strings.get(i), strings.get(j)) {
