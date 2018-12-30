@@ -29,11 +29,30 @@ fn parse_line(line: String) -> Entry {
 }
 
 fn part1(data: &Vec<Entry>) {
-    let fabric: HashMap<(u32, u32), u32> = HashMap::new();
+    let mut fabric: HashMap<(u32, u32), u32> = HashMap::new();
 
-    for entry in entries {
-        println!("{:?}", entry);
+    for entry in data {
+        let start_x = (entry.1).0;
+        let start_y = (entry.1).1;
+        let size_x = (entry.2).0;
+        let size_y = (entry.2).1;
+
+        // Populate the hash-map with the number of times a square is covered.
+        for i in start_x..start_x+size_x {
+            for j in start_y..start_y+size_y {
+                if let Some(x) = fabric.get_mut(&(i, j)) {
+                    *x += 1;
+                } else {
+                    fabric.insert((i, j), 1);
+                }
+            }
+        }
     }
+
+    // Count the number of squares that is claimed by at least 2 entries.
+    let count = fabric.values().filter(|x| **x > 1).count();
+    
+    println!("{}", count);
 }
 
 fn part2(data: &Vec<Entry>) {
