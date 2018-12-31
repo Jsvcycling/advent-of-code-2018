@@ -8,14 +8,14 @@ use std::iter::IntoIterator;
 
 const INPUT_FILE: &'static str = "./input/input_06.txt";
 
-pub type Coord = (i32, i32);
+type Coord = (i32, i32);
 
 fn read_file() -> Vec<String> {
     let f = File::open(INPUT_FILE).unwrap();
     BufReader::new(f).lines().collect::<Result<_, _>>().unwrap()
 }
 
-pub fn parse_line(line: String) -> Coord {
+fn parse_line(line: String) -> Coord {
     let parts: Vec<&str> = line.split(", ").into_iter().collect();
 
     (parts[0].parse().unwrap(), parts[1].parse().unwrap())
@@ -25,7 +25,7 @@ fn manhattan_dist(p1: Coord, p2: Coord) -> u32 {
     return ((p1.0 - p2.0).abs() + (p1.1 - p2.1).abs()) as u32
 }
 
-pub fn part1(data: &Vec<Coord>) -> Option<usize> {
+fn part1(data: &Vec<Coord>) -> Option<usize> {
     // The furthest points from the origin. Use these as our bounds.
     let grid_min_x = data.iter().min_by_key(|x| x.0).unwrap().0;
     let grid_min_y = data.iter().min_by_key(|x| x.1).unwrap().1;
