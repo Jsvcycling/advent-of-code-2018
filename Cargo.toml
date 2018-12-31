@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 chrono = "^0.4.6"
+lazy_static = "^1.2.0"
 
 [[bin]]
 name="day-01"

@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate lazy_static;
+
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -127,10 +130,11 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
-    #[test]
-    fn test_part1() {
-        let test_data: Vec<Coord> = vec![
+
+    const TEST_LIMIT: u32 = 32;
+
+    lazy_static! {
+        static ref TEST_DATA: Vec<Coord> = vec![
             (1, 1),
             (1, 6),
             (8, 3),
@@ -138,22 +142,15 @@ mod tests {
             (5, 5),
             (8, 9)
         ];
-        
-        assert_eq!(part1(&test_data), Some(17));
+    }
+    
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1(&TEST_DATA), Some(17));
     }
 
     #[test]
     fn test_part2() {
-        let test_limit = 32;
-        let test_data: Vec<Coord> = vec![
-            (1, 1),
-            (1, 6),
-            (8, 3),
-            (3, 4),
-            (5, 5),
-            (8, 9)
-        ];
-
-        assert_eq!(part2(&test_data, test_limit), Some(16));
+        assert_eq!(part2(&TEST_DATA, TEST_LIMIT), Some(16));
     }
 }
