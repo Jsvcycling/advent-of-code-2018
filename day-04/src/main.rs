@@ -96,8 +96,55 @@ fn part1(data: &Vec<&State>) -> Option<usize> {
     Some((guard_id * pop_time) as usize)
 }
 
+// This is pretty ugly too but it works pretty well...
 fn part2(data: &Vec<&State>) -> Option<usize> {
-    None
+    let mut sleep_data: HashMap<NaiveTime, HashMap<i32, i32>> = HashMap::new();
+
+    let mut i = 0;
+
+    // For each time, count how many times a guard is asleep at that time.
+    while i < data.len()-1 {
+        if let (Some(x), Some(y)) = (data.get(i), data.get(i+1)) {
+            if !x.awake && y.awake && x.id == y.id {
+                let mut curr_time = x.timestamp.time();
+
+                while curr_time < y.timestamp.time() {
+                    if let Some(a) = sleep_data.get_mut(&curr_time) {
+                        if let Some(b) = a.get_mut(&x.id) {
+                            *b += 1;
+                        } else {
+                            a.insert(x.id, 1);
+                        }
+                    } else {
+                        let mut b: HashMap<i32, i32> = HashMap::new();
+                        b.insert(x.id, 1);
+                        sleep_data.insert(curr_time, b);
+                    }
+
+                    curr_time = curr_time + Duration::minutes(1);
+                }
+            } else {
+                panic!("Bad data: {:?} {:?}", x, y);
+            }
+        }
+
+        i += 2;
+    }
+
+    let mut maxes: HashMap<NaiveTime, (i32, i32)> = HashMap::new();
+
+    // Find the max at each time.
+    for (time, vals) in sleep_data.iter() {
+        let max = vals.iter().max_by_key(|x| x.1).unwrap();
+        maxes.insert(*time, (*max.0, *max.1));
+    }
+
+    // Find the max of the maxes.
+    let max = maxes.iter().max_by_key(|x| (x.1).1).unwrap();
+    let guard_id = (max.1).0 as u32;
+    let time = max.0.minute();
+
+    Some((guard_id * time) as usize)
 }
 
 fn main() {
@@ -129,5 +176,5 @@ fn main() {
 
     // Compute the solutions.
     println!("Part 1 Solution: {:?}", part1(&data).unwrap());
-    println!("Part 2 Solution: {:?}", part2(&data));
+    println!("Part 2 Solution: {:?}", part2(&data).unwrap());
 }
