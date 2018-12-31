@@ -1,5 +1,5 @@
 [[package]]
-name = "advent-of-code-2018-day-04"
+name = "advent-of-code-2018"
 version = "1.0.0"
 dependencies = [
  "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",

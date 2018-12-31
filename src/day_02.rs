@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::iter::FromIterator;
 
-const INPUT_FILE: &'static str = "./data/input.txt";
+const INPUT_FILE: &'static str = "./input/input_02.txt";
 
 fn read_file() -> Vec<String> {
     let f = File::open(INPUT_FILE).unwrap();

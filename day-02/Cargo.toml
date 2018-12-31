@@ -1,5 +1,0 @@
-[package]
-name = "advent-of-code-2018-day-02"
-version = "1.0.0"
-authors = ["Joshua Vega <jvega@jsvcycling.com>"]
-edition = "2018"

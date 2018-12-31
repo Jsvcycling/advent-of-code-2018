@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-const INPUT_FILE: &'static str = "./data/input.txt";
+const INPUT_FILE: &'static str = "./input/input_01.txt";
 
 fn read_file() -> Vec<String> {
     let f = File::open(INPUT_FILE).unwrap();

@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::iter::IntoIterator;
 
-const INPUT_FILE: &'static str = "./data/input.txt";
+const INPUT_FILE: &'static str = "./input/input_03.txt";
 
 #[derive(Debug)]
 struct Entry(u32, (u32, u32), (u32, u32));

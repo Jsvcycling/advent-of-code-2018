@@ -7,7 +7,7 @@ use std::iter::IntoIterator;
 
 use chrono::{Duration, NaiveDate, NaiveDateTime, NaiveTime, Timelike};
 
-const INPUT_FILE: &'static str = "./data/input.txt";
+const INPUT_FILE: &'static str = "./input/input_04.txt";
 
 #[derive(Debug)]
 struct State {
