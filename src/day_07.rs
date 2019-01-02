@@ -63,7 +63,7 @@ fn part1(data: &mut HashMap<char, Vec<char>>) -> Option<String> {
 fn part2(data: &mut HashMap<char, Vec<char>>, count: usize, base_time: usize) -> Option<usize> {
     let mut workers: HashMap<usize, (char, usize)> = {
         let mut m = HashMap::with_capacity(count);
-        (0..count).for_each(|x| { m.insert(x, ('0', 0)); });
+        (0..count).for_each(|i| { m.insert(i, ('0', 0)); });
         m
     };
 
@@ -80,8 +80,7 @@ fn part2(data: &mut HashMap<char, Vec<char>>, count: usize, base_time: usize) ->
             data.iter_mut().for_each(|(_, v)| { v.remove_item(&worker.0); });
 
             // Select the nodes that have no parent(s).
-            let mut choices: Vec<char> = data
-                .iter()
+            let mut choices: Vec<char> = data.iter()
                 .filter(|(_, v)| v.len() == 0)
                 .map(|(k, _)| k.clone())
                 .collect();
@@ -103,14 +102,14 @@ fn part2(data: &mut HashMap<char, Vec<char>>, count: usize, base_time: usize) ->
             worker.1 = base_time + ALPHABET.chars().position(|x| x == node).unwrap() + 1;
         }
 
-        // Are we all done?
-        let done = workers
-            .iter()
+        // are we all done?
+        let done = workers.iter()
             .filter(|(_, (n, _))| n != &'0')
             .count() == 0;
 
         // We're done. Quit.
         if done {
+            curr_second -= 1;
             break;
         }
 
@@ -187,6 +186,6 @@ mod day_07 {
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(&mut TEST_DATA.clone(), 2, 0), Some(15));
+        assert_eq!(part2(&mut TEST_DATA.clone(), 2, 0), Some(14));
     }
 }
